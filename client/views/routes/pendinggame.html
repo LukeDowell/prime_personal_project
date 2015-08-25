@@ -1,0 +1,29 @@
+<section id="pendingSection" layout="column">
+
+    <!-- The start button -->
+    <md-content layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary">Start!</md-button>
+        <span flex></span>
+    </md-content>
+
+    <div layout="row">
+        <span flex="15"></span>
+        <!-- The list of everyone joining team one -->
+        <md-content id="teamOneContent" layout="column">
+            <h2>Team One</h2>
+            <ul>
+                <li ng-repeat="player in teamOne">{{player.name}}</li>
+            </ul>
+        </md-content>
+        <span flex></span>
+        <!-- The list of everyone joining team two -->
+        <md-content id="teamTwoContent" layout="column">
+            <h2>Team Two</h2>
+            <ul>
+                <li ng-repeat="player in teamTwo">{{player.name}}</li>
+            </ul>
+        </md-content>
+        <span flex="15"></span>
+    </div>
+</section>

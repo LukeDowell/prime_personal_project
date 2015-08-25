@@ -8,19 +8,22 @@
 </head>
 <body ng-controller="MainController">
 
-    <h1>Prime Connections</h1>
+    <h1 id="identity">Prime Connections</h1>
 
     <div>
         <main ng-view></main>
     </div>
 
     <!-- Begin Scripts -->
+    <!-- Vendors -->
     <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
     <script type="text/javascript" src="vendors/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="vendors/angular-aria/angular-aria.min.js"></script>
     <script type="text/javascript" src="vendors/angular-material/angular-material.min.js"></script>
     <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
+    <!--Socket-->
     <script type="text/javascript" src="socket.io/socket.io.js"></script>
+    <!--Local-->
     <script type="text/javascript" src="assets/scripts/app.js"></script>
     <script type="text/javascript" src="assets/scripts/controllers/controllers.js"></script>
     <!-- End Scripts -->

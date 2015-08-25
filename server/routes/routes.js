@@ -5,8 +5,8 @@ var index = require('./index');
 var game = require('./game');
 
 function init(app) {
+    app.use('/game', game);
     app.use('/', index);
-    app.use('game', game);
     console.log("Routes initialized!");
 }
 

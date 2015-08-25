@@ -2,7 +2,7 @@
  * Created by lukedowell on 8/24/15.
  */
 //Angular app
-var app = angular.module('primeApp', ['ngRoute'])
+var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/home', {
@@ -17,6 +17,10 @@ var app = angular.module('primeApp', ['ngRoute'])
                 templateUrl: "/assets/views/routes/joinRoom.html",
                 controller: "JoinRoomController"
             })
+            .when('/pendinggame', {
+                templateUrl: "/assets/views/routes/pendinggame.html",
+                controller: "PendingGameController"
+            })
             .otherwise({
                 redirectTo: '/home'
             })
@@ -24,3 +28,11 @@ var app = angular.module('primeApp', ['ngRoute'])
 
 //Socket.io client
 var socket = io();
+
+/**
+ * A container for all of our socket requests, just to keep them organized
+ */
+var CHANNEL = {
+    createRoom: "create room",
+    joinRoom: "join room"
+};

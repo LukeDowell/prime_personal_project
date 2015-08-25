@@ -21,14 +21,39 @@ app.controller("HomeController", ['$scope', '$window', function($scope, $window)
 }]);
 
 //Create room page controller
-app.controller("CreateRoomController", ['$scope', function($scope) {
+app.controller("CreateRoomController", ['$scope', '$window', function($scope, $window) {
     $scope.submitRoom = function(room) {
-        console.log(room);
+        socket.emit(CHANNEL.createRoom, room);
+        $window.location.href = "#pendinggame";
     }
 }]);
 
 //Join room page controller
-app.controller("JoinRoomController", ['$scope', function($scope) {
+app.controller("JoinRoomController", ['$scope', '$http', function($scope, $http) {
     //Rooms available
     $scope.rooms = [];
+    $http.get('/game/rooms').then(function(response) {
+        console.log(response);
+    });
+}]);
+
+
+app.controller("PendingGameController", ['$scope', function($scope) {
+    $scope.teamOne = {
+        testPlayer: {
+            name: "Luke Dowell"
+        },
+        testPlayerTwo: {
+            name: "Maria Stommes"
+        }
+    };
+
+    $scope.teamTwo = {
+        testPlayer: {
+            name: "Luke Dowell"
+        },
+        testPlayerTwo: {
+            name: "Maria Stommes"
+        }
+    }
 }]);

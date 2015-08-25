@@ -3,8 +3,9 @@
  */
 //Modules
 var http = require('http');
+var bodyParser = require('body-parser');
 var app = require('express')();
-
+var game = require('./game-controller');
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
@@ -13,6 +14,8 @@ var routes = require('./routes/routes');
 
 //App data
 app.set('port', (process.env.PORT || 5000));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Start server
 routes.init(app);
@@ -22,14 +25,8 @@ server.listen(app.get('port'), function() {
 
 //Socket.IO
 io.on('connection', function(socket) {
-    console.log("User connected!");
-    socket.on('test', function(msg) {
-        console.log("Test received!");
-    });
-
-    socket.on("create room", function(msg) {
-        console.log("Creating Room!");
-    });
+    console.log("User connected: " + socket.handshake.headers['user-agent']);
+    game.handleConnection(socket);
 });
 
 //Export all of our useful modules
