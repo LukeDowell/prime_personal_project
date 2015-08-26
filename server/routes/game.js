@@ -3,17 +3,16 @@
  */
 var router = require('express').Router();
 var io = require('../app').io;
-var game = require('../game-controller');
+var game = require('../game/game-controller');
 
 /**
  * Receives a request to get a list of all rooms
  */
 router.get('/rooms', function(req, res) {
     var roomNames = [];
-    for(room in game.rooms) {
-        var name = room.name;
-        roomNames.push(room.name);
-    }
+    game.rooms.map(function(room) {
+       roomNames.push(room.name);
+    });
     res.send(roomNames);
 });
 

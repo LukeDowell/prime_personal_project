@@ -25,7 +25,7 @@ var assetSources = [
 //Pretty them up then put em to twerk
 gulp.task('scripts', function() {
     return gulp.src('client/scripts/**/*')
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest("server/public/assets/scripts"))
 });
 

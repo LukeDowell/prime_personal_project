@@ -5,7 +5,7 @@
 var http = require('http');
 var bodyParser = require('body-parser');
 var app = require('express')();
-var game = require('./game-controller');
+var game = require('./game/game-controller');
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 

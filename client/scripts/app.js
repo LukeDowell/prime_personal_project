@@ -9,12 +9,12 @@ var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
                 templateUrl: "/assets/views/routes/home.html",
                 controller: "HomeController"
             })
-            .when('/createRoom', {
-                templateUrl: "/assets/views/routes/createRoom.html",
+            .when('/createroom', {
+                templateUrl: "/assets/views/routes/createroom.html",
                 controller: "CreateRoomController"
             })
-            .when('/joinRoom', {
-                templateUrl: "/assets/views/routes/joinRoom.html",
+            .when('/joinroom', {
+                templateUrl: "/assets/views/routes/joinroom.html",
                 controller: "JoinRoomController"
             })
             .when('/pendinggame', {
@@ -34,5 +34,6 @@ var socket = io();
  */
 var CHANNEL = {
     createRoom: "create room",
-    joinRoom: "join room"
+    joinRoom: "join room",
+    playerJoined: "player joined"
 };

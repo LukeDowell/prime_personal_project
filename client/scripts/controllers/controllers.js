@@ -11,11 +11,11 @@ app.controller("MainController", ['$scope', function($scope) {
 app.controller("HomeController", ['$scope', '$window', function($scope, $window) {
 
     $scope.showCreateRoom = function() {
-        $window.location.href = "#createRoom";
+        $window.location.href = "#createroom";
     };
 
     $scope.showJoinRoom = function() {
-        $window.location.href = '#joinRoom';
+        $window.location.href = '#joinroom';
     };
 
 }]);
@@ -32,28 +32,33 @@ app.controller("CreateRoomController", ['$scope', '$window', function($scope, $w
 app.controller("JoinRoomController", ['$scope', '$http', function($scope, $http) {
     //Rooms available
     $scope.rooms = [];
+
+    $scope.joinRoom = function(roomName) {
+        var name = $scope.player.name;
+        socket.emit(CHANNEL.joinRoom, [roomName, name]);
+    };
+
     $http.get('/game/rooms').then(function(response) {
-        console.log(response);
-    });
+        $scope.rooms = response.data;
+    })
 }]);
 
 
 app.controller("PendingGameController", ['$scope', function($scope) {
-    $scope.teamOne = {
-        testPlayer: {
-            name: "Luke Dowell"
-        },
-        testPlayerTwo: {
-            name: "Maria Stommes"
-        }
-    };
 
-    $scope.teamTwo = {
-        testPlayer: {
-            name: "Luke Dowell"
-        },
-        testPlayerTwo: {
-            name: "Maria Stommes"
+    $scope.redTeam = [];
+
+    $scope.blueTeam = [];
+
+    socket.on(CHANNEL.playerJoined, function(player) {
+        if(player.team === "blue") {
+            if($scope.redTeam.includes(player) === -1) {
+                $scope.redTeam.push(player);
+            }
+        } else {
+            if($scope.blueTeam.indexOf(name) === -1) {
+                $scope.blueTeam.push(player);
+            }
         }
-    }
+    });
 }]);

@@ -1,3 +1,17 @@
 #identity {
     text-align: center;
 }
+
+/** Join Room Page **/
+
+#joinRoomSection h2 {
+    text-align: center;
+}
+
+#roomsAvailable {
+    list-style: none;
+}
+
+#roomsAvailable li {
+    width: 100%;
+}
