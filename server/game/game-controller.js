@@ -24,7 +24,7 @@ function findRoom(name) {
 }
 
 /**
- * A room instance
+ * A game instance
  * @param room
  * @param adminConnection
  *
@@ -36,13 +36,16 @@ function Room(room, adminConnection) {
     this.name = room.name;
 
     //Our admin's socket
-    this.adminConnection = adminConnection.id;
+    this.adminConnection = adminConnection;
 
     //All of our mobile connections
     this.players = new Map();
 
     //Assign our ID and push
     this.roomId = rooms.length + 1;
+
+    //Whether or not this game is running
+    this.isRunning = false;
 
     //Our teams as maps. The player is the key, the socket connection is the value
     this.team = {
@@ -51,7 +54,7 @@ function Room(room, adminConnection) {
     };
 
     console.log("Room: " + this.name + " created with ID: " + this.roomId);
-    console.log("The room's controller is: " + adminConnection.handshake.headers['user-agent']);
+    console.log("The room's controller is socket: " + adminConnection.id);
     rooms.push(this);
 }
 
@@ -75,11 +78,11 @@ Room.prototype.assignNewPlayer = function(player, socket) {
             player.team = "red";
         }
     }
+
     //Add to whatever team
     this.team[player.team].push(player);
     this.players.set(player, socket);
-    io.socket.sockets(this.adminConnection).send(CHANNEL.playerJoined, player);
-
+    this.adminConnection.emit(CHANNEL.playerJoined, player);
     console.log("Adding " + player.name + " to room: " + this.name + " on team: " + player.team);
 };
 
@@ -126,6 +129,7 @@ function handleConnection(socket) {
      * A join room request
      */
     socket.on(CHANNEL.joinRoom, function(msg) {
+        //a join room request is an array, [roomname, playername]
         var room = findRoom(msg[0]);
         if(room) {
             if(msg[1]) {

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="vendors/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="assets/styles/style.css"/>
 </head>
-<body ng-controller="MainController">
+<body>
 
     <h1 id="identity">Prime Connections</h1>
 
@@ -21,11 +21,14 @@
     <script type="text/javascript" src="vendors/angular-aria/angular-aria.min.js"></script>
     <script type="text/javascript" src="vendors/angular-material/angular-material.min.js"></script>
     <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
-    <!--Socket-->
-    <script type="text/javascript" src="socket.io/socket.io.js"></script>
     <!--Local-->
+    <script type="text/javascript" src="socket.io/socket.io.js"></script>
     <script type="text/javascript" src="assets/scripts/app.js"></script>
-    <script type="text/javascript" src="assets/scripts/controllers/controllers.js"></script>
+    <!--Controllers-->
+    <script type="text/javascript" src="assets/scripts/controllers/HomeController.js"></script>
+    <script type="text/javascript" src="assets/scripts/controllers/CreateRoomController.js"></script>
+    <script type="text/javascript" src="assets/scripts/controllers/JoinRoomController.js"></script>
+    <script type="text/javascript" src="assets/scripts/controllers/PendingGameController.js"></script>
     <!-- End Scripts -->
 </body>
 </html>

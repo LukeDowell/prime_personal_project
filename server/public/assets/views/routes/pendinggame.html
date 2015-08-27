@@ -13,7 +13,7 @@
         <md-content id="teamOneContent" layout="column">
             <h2>Team One</h2>
             <ul>
-                <li ng-repeat="player in redTeam">{{player}}</li>
+                <li ng-repeat="player in $scope.redTeam">{{player.name}}</li>
             </ul>
         </md-content>
         <span flex></span>
@@ -21,7 +21,7 @@
         <md-content id="teamTwoContent" layout="column">
             <h2>Team Two</h2>
             <ul>
-                <li ng-repeat="player in blueTeam">{{player}}</li>
+                <li ng-repeat="player in $scope.blueTeam">{{player.name}}</li>
             </ul>
         </md-content>
         <span flex="15"></span>

@@ -11,7 +11,10 @@ var game = require('../game/game-controller');
 router.get('/rooms', function(req, res) {
     var roomNames = [];
     game.rooms.map(function(room) {
-       roomNames.push(room.name);
+        //We only want rooms that haven't started
+       if(!room.isRunning) {
+           roomNames.push(room.name);
+       }
     });
     res.send(roomNames);
 });

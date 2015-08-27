@@ -1,6 +1,7 @@
 /**
  * Created by lukedowell on 8/24/15.
  */
+
 //Angular app
 var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
     .config(['$routeProvider', function($routeProvider) {
@@ -21,13 +22,39 @@ var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
                 templateUrl: "/assets/views/routes/pendinggame.html",
                 controller: "PendingGameController"
             })
+            .when('/admin', {
+                templateUlr: "/assets/views/routes/admin.html",
+                controller: "AdminController"
+            })
             .otherwise({
                 redirectTo: '/home'
             })
     }]);
 
-//Socket.io client
-var socket = io();
+//Create a service for socket.io
+app.factory('socket', function($rootScope) {
+    var socket = io();
+    return {
+        on: function(eventName, callback) {
+            socket.on(eventName, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        emit: function(eventName, data, callback) {
+            socket.emit(eventName, data, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    if(callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            });
+        }
+    };
+});
 
 /**
  * A container for all of our socket requests, just to keep them organized
