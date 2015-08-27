@@ -2,7 +2,6 @@
  * Created by lukedowell on 8/24/15.
  */
 var router = require('express').Router();
-var io = require('../app').io;
 var game = require('../game/game-controller');
 
 /**

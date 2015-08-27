@@ -22,8 +22,12 @@ var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
                 templateUrl: "/assets/views/routes/pendinggame.html",
                 controller: "PendingGameController"
             })
+            .when('/waiting', {
+                templateUrl:  "/assets/views/routes/waiting.html",
+                controller: "WaitingController"
+            })
             .when('/admin', {
-                templateUlr: "/assets/views/routes/admin.html",
+                templateUrl: "/assets/views/routes/admin.html",
                 controller: "AdminController"
             })
             .otherwise({
@@ -62,5 +66,7 @@ app.factory('socket', function($rootScope) {
 var CHANNEL = {
     createRoom: "create room",
     joinRoom: "join room",
-    playerJoined: "player joined"
+    playerJoined: "player joined",
+    startGameRequest: "start game",
+    error: "application error"
 };
