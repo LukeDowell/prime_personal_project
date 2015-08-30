@@ -1,10 +1,19 @@
-<section id="adminSection" layout="column">
-    <div layout="column">
-        <label>Blue Team:</label>
-        <md-progress-linear class="md-primary" md-mode="determinate" value="{{blueProgress}}"></md-progress-linear>
-    </div>
-    <div layout="column">
-        <label>Blue Team:</label>
-        <md-progress-linear class="md-primary" md-mode="determinate" value="{{redProgress}}"></md-progress-linear>
+<section id="adminSection">
+    <div layout="column" height="100%">
+        <h2>Score</h2>
+        <div flex>
+            <p>Blue Team</p>
+            <md-progress-linear class="md-primary" md-mode="determinate" value="{{blueProgress}}"></md-progress-linear>
+        </div>
+        <div flex>
+            <p>Red Team</p>
+            <md-progress-linear class="md-warn" md-mode="determinate" value="{{redProgress}}"></md-progress-linear>
+        </div>
+        <h2>Events</h2>
+        <md-content flex layout-align="space-around">
+            <ul>
+                <li ng-repeat="event in events">{{event}}</li>
+            </ul>
+        </md-content>
     </div>
 </section>

@@ -12,12 +12,13 @@ app.controller("JoinRoomController", ['$scope', '$window', '$mdDialog', 'socket'
                 .clickOutsideToClose(true)
                 .title("Uh oh...")
                 .content("You either haven't input a name or it is too short. Try using more than 2 characters.")
-                .ok("Okie dokie")
+                .ok("Got it!")
             );
         } else {
             socket.emit(CHANNEL.joinRequest, name, function(response) {
-                if(response == true) {
+                if(response !== false) {
                     properties.set('name', name);
+                    properties.set('team', response.team);
                     $window.location.href = "#waiting";
                 } else {
                     $mdDialog.show(

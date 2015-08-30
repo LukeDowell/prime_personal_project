@@ -69,5 +69,6 @@ var CHANNEL = {
     joinRequest: "join request",
     playerJoined: "player joined",
     startGameRequest: "start game",
+    event: "event",
     error: "application error"
 };

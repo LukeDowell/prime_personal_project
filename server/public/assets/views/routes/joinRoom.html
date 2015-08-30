@@ -1,10 +1,12 @@
 <section id="joinRoomSection">
     <h2>Join a room!</h2>
     <div layout="row">
-        <md-input-container>
-            <label>Player Name</label>
-            <input ng-model="name">
-        </md-input-container>
+        <form name="myForm">
+            <md-input-container>
+                <label>Player Name</label>
+                <input ng-model="name">
+            </md-input-container>
+        </form>
     </div>
 
     <md-button class="md-primary md-raised" ng-click="joinGame(name)">Join Game</md-button>

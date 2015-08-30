@@ -13,6 +13,7 @@ var CHANNEL = {
     joinRequest: "join request",
     playerJoined: "player joined",
     startGameRequest: "start game",
+    event: "event",
     error: "application error"
 };
 
@@ -24,8 +25,20 @@ function handle(socket) {
     console.log("Socket connected: " + socket.id);
 
 
+    //Player join request
     socket.on(CHANNEL.joinRequest, function(msg, callback) {
         callback(GAME.handleNewPlayer(msg, this));
+    });
+
+    //Receive application to be admin
+    socket.on(CHANNEL.createRoom, function(msg, callback) {
+        if(GAME.adminConnection === undefined || GAME.adminConnection == this.id) {
+            GAME.adminConnection = this.id;
+            callback(true);
+        } else {
+            callback(false);
+        }
+
     });
 
     socket.on(CHANNEL.playerJoined, function(msg) {

@@ -1,7 +1,7 @@
 /**
  * Created by lukedowell on 8/25/15.
  */
-var app = require('../app');
+var io = require('../app').io;
 
 //Game namespace
 var GAME = {
@@ -27,13 +27,18 @@ var GAME = {
      *      The name of the player
      * @param socket
      *      The socket that belongs to the player
-     * @returns {boolean}
-     *      True if adding successful, false otherwise
+     * @returns
+     *      Player object if successful, false if not
      */
     handleNewPlayer: function(name, socket) {
-        return true;
+        if(GAME.players.get(socket.id)) {
+            return false;
+        } else {
+            var player = new Player(name);
+            GAME.players.set(socket.id, player);
+        }
+        return player;
     }
-
 };
 
 
