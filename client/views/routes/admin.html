@@ -1,3 +1,10 @@
-<section id="adminSection">
-    <h1>The beautiful admin console</h1>
+<section id="adminSection" layout="column">
+    <div layout="column">
+        <label>Blue Team:</label>
+        <md-progress-linear class="md-primary" md-mode="determinate" value="{{blueProgress}}"></md-progress-linear>
+    </div>
+    <div layout="column">
+        <label>Blue Team:</label>
+        <md-progress-linear class="md-primary" md-mode="determinate" value="{{redProgress}}"></md-progress-linear>
+    </div>
 </section>

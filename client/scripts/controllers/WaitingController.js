@@ -1,12 +1,6 @@
 /**
  * Created by lukedowell on 8/27/15.
  */
-app.controller("WaitingController", ['$scope', 'socket', function($scope, socket) {
-    socket.on(CHANNEL.joinRoom, function(message) {
-        socket.join
-    });
-
-    socket.on(CHANNEL.startGameRequest, function(msg) {
-        console.log("Starting game...");
-    });
+app.controller("WaitingController", ['$scope', 'socket', 'properties', function($scope, socket, properties) {
+    $scope.playerName = properties.get('name');
 }]);

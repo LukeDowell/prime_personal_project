@@ -6,21 +6,9 @@
 var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when('/home', {
-                templateUrl: "/assets/views/routes/home.html",
-                controller: "HomeController"
-            })
-            .when('/createroom', {
-                templateUrl: "/assets/views/routes/createroom.html",
-                controller: "CreateRoomController"
-            })
             .when('/joinroom', {
                 templateUrl: "/assets/views/routes/joinroom.html",
                 controller: "JoinRoomController"
-            })
-            .when('/pendinggame', {
-                templateUrl: "/assets/views/routes/pendinggame.html",
-                controller: "PendingGameController"
             })
             .when('/waiting', {
                 templateUrl:  "/assets/views/routes/waiting.html",
@@ -31,7 +19,7 @@ var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
                 controller: "AdminController"
             })
             .otherwise({
-                redirectTo: '/home'
+                redirectTo: '/joinroom'
             })
     }]);
 
@@ -60,12 +48,25 @@ app.factory('socket', function($rootScope) {
     };
 });
 
+//Service for passing values between controllers
+app.factory('properties', function() {
+    var props = {};
+    return {
+        get: function(key) {
+            return props[key];
+        },
+        set: function(key, value) {
+            props[key] = value;
+        }
+    }
+});
+
 /**
  * A container for all of our socket requests, just to keep them organized
  */
 var CHANNEL = {
     createRoom: "create room",
-    joinRoom: "join room",
+    joinRequest: "join request",
     playerJoined: "player joined",
     startGameRequest: "start game",
     error: "application error"

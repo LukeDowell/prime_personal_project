@@ -1,15 +1,11 @@
-<section id="joinRoomSection" ng-model="player">
+<section id="joinRoomSection">
     <h2>Join a room!</h2>
     <div layout="row">
-        <span flex="20"></span>
         <md-input-container>
             <label>Player Name</label>
-            <input ng-model="player.name">
+            <input ng-model="name">
         </md-input-container>
-        <span flex="10"></span>
     </div>
 
-    <ul id="roomsAvailable">
-        <li ng-repeat="room in rooms"><md-button ng-click="joinRoom(room)" class="md-warn md-raised">{{room}}</md-button></li>
-    </ul>
+    <md-button class="md-primary md-raised" ng-click="joinGame(name)">Join Game</md-button>
 </section>
