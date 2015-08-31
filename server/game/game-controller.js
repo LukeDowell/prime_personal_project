@@ -2,6 +2,11 @@
  * Created by lukedowell on 8/25/15.
  */
 var io = require('../app').io;
+var Mini = require('./minigames/minigame');
+var ChildProcess = require('child_process');
+
+//Minigames
+var ButtonPushGame = require('./minigames/button-push');
 
 //Game namespace
 var GAME = {
@@ -21,13 +26,21 @@ var GAME = {
         blue: []
     },
 
-    startGame: function() {
-        if(!GAME.isRunning) {
+    /**
+     * Handles a request to start the game
+     * @param socketid
+     *      The socket id making a request
+     * @returns {boolean}
+     *      True if game started, false otherwise
+     */
+    startGame: function(socketid) {
+        if (!GAME.isRunning && socketid === GAME.adminConnection) {
             console.log("Starting game...");
             GAME.isRunning = true;
-        } else {
-
+            GAME.runTestGame();
+            return true;
         }
+        return false;
     },
 
     /**
@@ -41,8 +54,10 @@ var GAME = {
      */
     handleNewPlayer: function(name, socket) {
         var player = null;
-        if(GAME.players.get(socket.id) === undefined) {
+        if(GAME.players.get(socket.id) === undefined && !GAME.isRunning) {
+
             player = new Player(name);
+            console.log("New player!" , player);
             GAME.players.set(socket.id, player);
 
             if(GAME.team.blue.length > GAME.team.red.length) {
@@ -57,9 +72,25 @@ var GAME = {
             GAME.team[player.team].push(player);
         }
         return player;
+    },
+
+    /**
+     * Places everyone in an arbitrary game to test very basic functionality
+     */
+    runTestGame: function() {
+        var buttonPushGame = new ButtonPushGame(GAME.players.values());
+        console.log(buttonPushGame);
     }
 };
 
+/**
+ * Minigame pool functionality
+ */
+var POOL = {
+
+    //An array of all active minigames we have running
+    activeGames: []
+};
 
 /**
  * Represents a player in our game
@@ -77,3 +108,4 @@ function Player(name) {
 }
 
 module.exports = GAME;
+module.exports.POOL = POOL;

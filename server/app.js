@@ -13,11 +13,8 @@ module.exports.io = io;
 module.exports.server = server;
 module.exports.app = app;
 
-
 var routes = require('./routes/routes');
 var socketHandler = require('./routes/websocket');
-
-
 
 //App data
 app.set('port', (process.env.PORT || 5000));
@@ -28,6 +25,13 @@ server.listen(app.get('port'), function() {
    console.log("Server started! Listening on port: " + app.get('port'));
 });
 
+//Hand off the connection events to our websocket handler
 io.on('connection', function(socket) {
+    console.log("Socket connected: " + socket.id);
     socketHandler.handle(socket);
+});
+
+io.on('disconnect', function(socket) {
+    console.log("Socket disconnected: " + socket.id);
+    socketHandler.handleDisconnect(socket);
 });

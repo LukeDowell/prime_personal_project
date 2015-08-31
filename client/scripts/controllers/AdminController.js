@@ -7,7 +7,13 @@ app.controller("AdminController", function($scope, socket) {
     $scope.events = [];
 
     $scope.startGame = function() {
-        console.log("Starting game");
+        socket.emit(CHANNEL.startGameRequest, "pls", function(response) {
+            if(response == true) {
+                console.log("Starting game!");
+            } else {
+                console.log("Not starting game... :[");
+            }
+        });
     };
 
     $scope.displayTeams = function() {
@@ -17,9 +23,9 @@ app.controller("AdminController", function($scope, socket) {
     //Apply to be the admin of this game
     socket.emit(CHANNEL.createRoom, "applicant", function(response) {
         if(response == true) {
-
+            console.log("Admin request approved");
         } else {
-
+            console.log("Admin request denied");
         }
     });
 

@@ -22,7 +22,6 @@ var CHANNEL = {
  * @param socket
  */
 function handle(socket) {
-    console.log("Socket connected: " + socket.id);
 
     //Player join request
     socket.on(CHANNEL.joinRequest, function(msg, callback) {
@@ -44,16 +43,24 @@ function handle(socket) {
 
     });
 
-    socket.on(CHANNEL.playerJoined, function(msg) {
+    //Request to start the game
+    socket.on(CHANNEL.startGameRequest, function(msg, callback) {
+        callback(GAME.startGame(this.id));
     });
 
-    socket.on(CHANNEL.startGameRequest, function(msg) {
-
-    });
-
+    //Error
     socket.on(CHANNEL.error, function(msg) {
         console.log(msg);
     });
 }
 
+/**
+ * Handles a socket being dropped
+ * @param socket
+ */
+function handleDisconnect(socket) {
+
+}
+
 module.exports.handle = handle;
+module.exports.handleDisconnect = handleDisconnect;

@@ -1,5 +1,8 @@
 #Personal Project Log
---------------------
+
+Over the course of this 2-week project, I'm going to try and keep a log of stuff I encounter every day. At the very least, this will
+let me keep track of problems that I get caught up on. I should be able to learn a lot about the way I work when comparing my final
+product to my scope of work using this log as a reference.
 
 ##Thursday, 27th of August
 
@@ -24,3 +27,19 @@ It's also mildly depressing to see how little progress I've actually made but I 
 I've been wondering how to pass values between controllers without using rootscope. I found an article today that
 suggested I just create a service that I can inject properties into. This seems pretty nifty to me so I'll be implementing
 that today as well.
+
+##Monday, 31st of August
+
+Today I've been working on creating my actual minigames. I've been wondering how I'll pass socket data from the clients to each individual minigame,
+and I've found documentation on Node's child processes. I'll be able to send sockets to each minigame based on some simple logic I can set up
+in the game controller and the child process (each minigame) treats it just like an event with a message parameter. I'm hoping this doesn't
+mess up socket.io at all and that it will just work, but maybe that is wishful thinking.
+
+I've been playing with child processes for a few hours now. They are pretty tricky, at least when comparing against the kind of material we have
+been taught so far. It led to me looking into EventEmitters in node which are pretty neat. Upon further inspection, Child Processes are probably
+not the most elegant solution to my problem but I think I'm still going to try and implement them because they seem very powerful and interesting.
+I'm modifying my minigame-pool structure to accomodate these processes now, I'd like to get that done by the end of the day.
+
+I think I have figured out how to use child processes with my minigames. I spent a few hours writing some code, saying "wait....that wont work...",
+deleting it, then re-writing it again some time later. After a few iterations of this I have a frankenstein-esque implementation of my original idea.
+Super pumped.
