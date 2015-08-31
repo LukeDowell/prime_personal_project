@@ -21,6 +21,15 @@ var GAME = {
         blue: []
     },
 
+    startGame: function() {
+        if(!GAME.isRunning) {
+            console.log("Starting game...");
+            GAME.isRunning = true;
+        } else {
+
+        }
+    },
+
     /**
      * Handles a new player request
      * @param name
@@ -28,14 +37,24 @@ var GAME = {
      * @param socket
      *      The socket that belongs to the player
      * @returns
-     *      Player object if successful, false if not
+     *      Player object if successful, null if not
      */
     handleNewPlayer: function(name, socket) {
-        if(GAME.players.get(socket.id)) {
-            return false;
-        } else {
-            var player = new Player(name);
+        var player = null;
+        if(GAME.players.get(socket.id) === undefined) {
+            player = new Player(name);
             GAME.players.set(socket.id, player);
+
+            if(GAME.team.blue.length > GAME.team.red.length) {
+                player.team = "red";
+            } else if (GAME.team.red.length > GAME.team.blue.length) {
+                player.team = "blue";
+            } else if (Math.random() > 0.5) {
+                player.team = "red";
+            } else {
+                player.team = "blue";
+            }
+            GAME.team[player.team].push(player);
         }
         return player;
     }

@@ -1,5 +1,9 @@
 <section id="adminSection">
-    <div layout="column" height="100%">
+    <div layout="row">
+        <md-button ng-click="startGame()" class="md-raised md-warn" flex="20">Start Game</md-button>
+        <md-button ng-click="displayTeams()" class="md-raised md-primary" flex="20">Display Teams</md-button>
+    </div>
+    <div layout="column">
         <h2>Score</h2>
         <div flex>
             <p>Blue Team</p>

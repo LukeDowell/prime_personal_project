@@ -24,10 +24,13 @@ var CHANNEL = {
 function handle(socket) {
     console.log("Socket connected: " + socket.id);
 
-
     //Player join request
     socket.on(CHANNEL.joinRequest, function(msg, callback) {
-        callback(GAME.handleNewPlayer(msg, this));
+        var newPlayer = GAME.handleNewPlayer(msg, this);
+        if(newPlayer) {
+            io.to(GAME.adminConnection).emit(CHANNEL.event, "Player joined: " + socket.id);
+        }
+        callback(newPlayer);
     });
 
     //Receive application to be admin
