@@ -43,3 +43,11 @@ I'm modifying my minigame-pool structure to accomodate these processes now, I'd 
 I think I have figured out how to use child processes with my minigames. I spent a few hours writing some code, saying "wait....that wont work...",
 deleting it, then re-writing it again some time later. After a few iterations of this I have a frankenstein-esque implementation of my original idea.
 Super pumped.
+
+##Tuesday, 1st of September
+
+I can create an instance of a Minigame with players attached to it now. Today I'm going to try and get my test minigame working (button-push.js).
+All it does is places players in a room for 30 seconds and counts how many times they push a button. The pushes are tallied up and whichever
+team had more button presses wins. My challenges will be figuring out how to 'check-out' players (make them unavailable to the rest of
+the application while they are in a minigame), how to route socket messages from the players to the minigame correctly and how to
+smoothly hand back the player objects to the game controller when the minigame is finished.

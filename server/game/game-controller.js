@@ -57,7 +57,6 @@ var GAME = {
         if(GAME.players.get(socket.id) === undefined && !GAME.isRunning) {
 
             player = new Player(name);
-            console.log("New player!" , player);
             GAME.players.set(socket.id, player);
 
             if(GAME.team.blue.length > GAME.team.red.length) {
@@ -70,6 +69,7 @@ var GAME = {
                 player.team = "blue";
             }
             GAME.team[player.team].push(player);
+            console.log("Added new player: " + player.name + " to team: " + player.team);
         }
         return player;
     },
@@ -78,7 +78,11 @@ var GAME = {
      * Places everyone in an arbitrary game to test very basic functionality
      */
     runTestGame: function() {
-        var buttonPushGame = new ButtonPushGame(GAME.players.values());
+        var allPlayers = [];
+        for(var player of GAME.players.values()) {
+            allPlayers.push(player);
+        }
+        var buttonPushGame = new ButtonPushGame(io, allPlayers);
         console.log(buttonPushGame);
     }
 };
@@ -96,12 +100,17 @@ var POOL = {
  * Represents a player in our game
  * @param name
  *      The player's name
+ * @param socketid
+ *      The player's socket id
  * @constructor
  */
-function Player(name) {
+function Player(name, socketid) {
 
     //This player's name
     this.name = name;
+
+    //This player's socket id
+    this.socketid = socketid;
 
     //This player's team
     this.team = null;
