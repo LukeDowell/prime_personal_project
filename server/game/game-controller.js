@@ -82,6 +82,7 @@ var GAME = {
         var allPlayers = [];
         for(var player of GAME.players.values()) {
             allPlayers.push(player);
+            io.to(player.socketid).emit(CHANNEL.MINIGAME.BUTTONPUSH, "join");
         }
 
         var buttonPushGame = new ButtonPushGame(io, allPlayers);

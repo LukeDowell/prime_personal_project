@@ -1,8 +1,11 @@
 /**
  * Created by lukedowell on 8/27/15.
  */
-app.controller("WaitingController", ['$scope', 'socket', 'properties', function($scope, socket, properties) {
+app.controller("WaitingController", ['$scope', '$window', 'socket', 'properties', function($scope, $window, socket, properties) {
     $scope.playerName = properties.get('name');
 
-    socket.on()
+    socket.on(CHANNEL.MINIGAME.BUTTONPUSH, function(msg) {
+        $window.location.href = "#buttonpush";
+        console.log("received");
+    });
 }]);

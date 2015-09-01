@@ -52,5 +52,7 @@ team had more button presses wins. My challenges will be figuring out how to 'ch
 the application while they are in a minigame), how to route socket messages from the players to the minigame correctly and how to
 smoothly hand back the player objects to the game controller when the minigame is finished.
 
-While I've been working on implementing my test minigame, I've been thinking about how I'll want to implement error handling. If a crucial player
-drops from a game, I'll have to give all
+While I've been working on implementing my test minigame, I've been thinking about how I'll want to implement error handling. That doesn't really
+matter right now though because I've hit a bit of a roadblock. How do I alert all of the players joining a specific minigame that they
+are now a part of that game? Additionally, I'm beginning to wonder what happens when multiple instances of the same game run. I suspect
+that ChildProcesses won't play very nice with that scenario.
