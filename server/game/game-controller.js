@@ -78,10 +78,12 @@ var GAME = {
      * Places everyone in an arbitrary game to test very basic functionality
      */
     runTestGame: function() {
+
         var allPlayers = [];
         for(var player of GAME.players.values()) {
             allPlayers.push(player);
         }
+
         var buttonPushGame = new ButtonPushGame(io, allPlayers);
         var gameInstance = new GameInstance(buttonPushGame, allPlayers, ChildProcess.fork(__dirname + "/minigames/button-push.js"));
         POOL.activeGames.push(gameInstance);

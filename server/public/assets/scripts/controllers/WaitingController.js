@@ -3,4 +3,6 @@
  */
 app.controller("WaitingController", ['$scope', 'socket', 'properties', function($scope, socket, properties) {
     $scope.playerName = properties.get('name');
+
+    socket.on()
 }]);

@@ -9,6 +9,7 @@ var GAME = require('../game/game-controller');
  * A container for all of our socket requests, just to keep them organized
  */
 var CHANNEL = {
+    MINIGAME: "minigame",
     createRoom: "create room",
     joinRequest: "join request",
     playerJoined: "player joined",
@@ -22,6 +23,14 @@ var CHANNEL = {
  * @param socket
  */
 function handle(socket) {
+
+    //Minigame Routing
+    socket.on(CHANNEL.MINIGAME, function(msg) {
+        var playerInstance = GAME.POOL.getInstanceForSocket(this.id);
+        if(playerInstance) {
+            playerInstance.childprocess.send(msg);
+        }
+    });
 
     //Player join request
     socket.on(CHANNEL.joinRequest, function(msg, callback) {

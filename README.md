@@ -51,3 +51,6 @@ All it does is places players in a room for 30 seconds and counts how many times
 team had more button presses wins. My challenges will be figuring out how to 'check-out' players (make them unavailable to the rest of
 the application while they are in a minigame), how to route socket messages from the players to the minigame correctly and how to
 smoothly hand back the player objects to the game controller when the minigame is finished.
+
+While I've been working on implementing my test minigame, I've been thinking about how I'll want to implement error handling. If a crucial player
+drops from a game, I'll have to give all

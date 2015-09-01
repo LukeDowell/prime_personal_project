@@ -6,6 +6,10 @@ var Mini = require('./minigame');
 var MIN_PLAYERS = 1;
 var MAX_PLAYERS = 5;
 
+//Events that pertain to this minigame
+var EVENTS = {
+    click: "click"
+};
 
 function ButtonPushMinigame(io, participants) {
     Mini.Game.call(this, MIN_PLAYERS, MAX_PLAYERS, participants);

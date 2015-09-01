@@ -18,6 +18,10 @@ var app = angular.module('primeApp', ['ngRoute', 'ngMaterial'])
                 templateUrl: "/assets/views/routes/admin.html",
                 controller: "AdminController"
             })
+            .when('/buttonpush', {
+                templateUrl: "/assets/views/routes/minigames/buttonpush.html",
+                controller: "ButtonPushController"
+            })
             .otherwise({
                 redirectTo: '/joinroom'
             })
@@ -65,6 +69,9 @@ app.factory('properties', function() {
  * A container for all of our socket requests, just to keep them organized
  */
 var CHANNEL = {
+    MINIGAME: {
+        BUTTONPUSH: "button push"
+    },
     createRoom: "create room",
     joinRequest: "join request",
     playerJoined: "player joined",
