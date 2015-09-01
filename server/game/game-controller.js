@@ -56,7 +56,7 @@ var GAME = {
         var player = null;
         if(GAME.players.get(socket.id) === undefined && !GAME.isRunning) {
 
-            player = new Player(name);
+            player = new Player(name, socket.id);
             GAME.players.set(socket.id, player);
 
             if(GAME.team.blue.length > GAME.team.red.length) {
@@ -83,7 +83,8 @@ var GAME = {
             allPlayers.push(player);
         }
         var buttonPushGame = new ButtonPushGame(io, allPlayers);
-        console.log(buttonPushGame);
+        var gameInstance = new GameInstance(buttonPushGame, allPlayers, ChildProcess.fork(__dirname + "/minigames/button-push.js"));
+        POOL.activeGames.push(gameInstance);
     }
 };
 
@@ -92,9 +93,53 @@ var GAME = {
  */
 var POOL = {
 
-    //An array of all active minigames we have running
-    activeGames: []
+    //An array of GameInstances
+    activeGames: [],
+
+    /**
+     * Gets the game instance that owns a particular socket
+     * @param socketid
+     * @returns {*}
+     */
+    getInstanceForSocket: function(socketid) {
+        for(var i = 0, length = POOL.activeGames.length; i < length; i++) {
+            if(POOL.activeGames[i].containsSocket(socketid)) {
+                return POOL.activeGames[i];
+            }
+        }
+        return null;
+    }
 };
+
+/**
+ * Represents an instance of a minigame
+ * @param minigame
+ *      The actual minigame this instance contains
+ * @param players
+ *      The players that are a part of the minigame
+ * @param childprocess
+ *      The childprocess fork that belongs to this instance
+ * @constructor
+ */
+function GameInstance(minigame, players, childprocess) {
+    this.minigame = minigame;
+    this.players = players;
+    this.childprocess = childprocess;
+
+    /**
+     * Checks whether or not this game instance has a specific socket id
+     * @param socketid
+     * @returns {boolean}
+     */
+    this.containsSocket = function(socketid) {
+        for(var i = 0, length = this.players.length; i < length; i++) {
+            if(this.players[i].socketid === socketid) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 
 /**
  * Represents a player in our game
