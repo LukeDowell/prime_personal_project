@@ -82,13 +82,9 @@ var GAME = {
         var allPlayers = [];
         for(var player of GAME.players.values()) {
             allPlayers.push(player);
-            io.sockets.connected[player.socketid].emit("minigame", {game:"buttonpush", view:"buttonpush.html", event:"join"});
-            console.log(io.sockets.connected[player.socketid]);
-            console.log(player);
         }
-
         var buttonPushGame = new ButtonPushGame(io, allPlayers);
-        var gameInstance = new GameInstance(buttonPushGame, allPlayers, ChildProcess.fork(__dirname + "/minigames/button-push.js"));
+        var gameInstance = new GameInstance(buttonPushGame, allPlayers);
         POOL.activeGames.push(gameInstance);
     }
 };
@@ -122,14 +118,11 @@ var POOL = {
  *      The actual minigame this instance contains
  * @param players
  *      The players that are a part of the minigame
- * @param childprocess
- *      The childprocess fork that belongs to this instance
  * @constructor
  */
-function GameInstance(minigame, players, childprocess) {
+function GameInstance(minigame, players) {
     this.minigame = minigame;
     this.players = players;
-    this.childprocess = childprocess;
 
     /**
      * Checks whether or not this game instance has a specific socket id

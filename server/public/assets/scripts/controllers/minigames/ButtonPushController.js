@@ -3,8 +3,8 @@
  */
 
 //Events that pertain to this minigame
-var EVENTS = {
-    click: "click:"
+var EVENT = {
+    click: "click"
 };
 
 app.controller('ButtonPushController', function($scope, $interval, socket) {
@@ -14,9 +14,12 @@ app.controller('ButtonPushController', function($scope, $interval, socket) {
         $scope.clicks++;
     };
 
-    //Send a message to the server every two seconds with how many clicks there are
-    //TODO: destroy this task, interval tasks aren't destroyed automatically
+    var lastClickAmount = 0;
+
     var task = $interval(function() {
-        socket.emit(CHANNEL.MINIGAME, EVENTS.click + "" + $scope.clicks);
+        var amount = $scope.clicks - lastClickAmount;
+        socket.emit(CHANNEL.MINIGAME, {event: EVENT.click, data: amount});
+        console.log("Ping sent");
+        lastClickAmount = $scope.clicks;
     }, 2000);
 });

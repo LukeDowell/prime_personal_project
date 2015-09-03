@@ -4,8 +4,7 @@
 app.controller("WaitingController", ['$scope', '$window', 'socket', 'properties', function($scope, $window, socket, properties) {
     $scope.playerName = properties.get('name');
 
-    socket.on(CHANNEL.MINIGAME.BUTTONPUSH, function(msg) {
+    socket.on("minigame", function() {
         $window.location.href = "#buttonpush";
-        console.log("received");
     });
 }]);

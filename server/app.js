@@ -30,8 +30,3 @@ io.on('connection', function(socket) {
     console.log("Socket connected: " + socket.id);
     socketHandler.handle(socket);
 });
-
-io.on('disconnect', function(socket) {
-    console.log("Socket disconnected: " + socket.id);
-    socketHandler.handleDisconnect(socket);
-});

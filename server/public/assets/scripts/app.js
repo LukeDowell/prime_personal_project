@@ -48,6 +48,9 @@ app.factory('socket', function($rootScope) {
                     }
                 });
             });
+        },
+        changeNamespace: function(namespace) {
+            socket = io(namespace);
         }
     };
 });
@@ -61,6 +64,9 @@ app.factory('properties', function() {
         },
         set: function(key, value) {
             props[key] = value;
+        },
+        remove: function(key) {
+            delete props[key];
         }
     }
 });
@@ -69,9 +75,7 @@ app.factory('properties', function() {
  * A container for all of our socket requests, just to keep them organized
  */
 var CHANNEL = {
-    MINIGAME: {
-        BUTTONPUSH: "button push"
-    },
+    MINIGAME: "minigame",
     createRoom: "create room",
     joinRequest: "join request",
     playerJoined: "player joined",

@@ -24,11 +24,10 @@ var CHANNEL = {
  */
 function handle(socket) {
 
-    //Minigame Routing
-    socket.on(CHANNEL.MINIGAME, function(msg) {
-        var playerInstance = GAME.POOL.getInstanceForSocket(this.id);
-        if(playerInstance) {
-            playerInstance.childprocess.send(msg);
+    socket.on(CHANNEL.MINIGAME, function(msg, callback) {
+        var instance = GAME.POOL.getInstanceForSocket(this.id);
+        if(instance) {
+            instance.minigame.handleSocket(this, msg, callback);
         }
     });
 
@@ -57,9 +56,8 @@ function handle(socket) {
         callback(GAME.startGame(this.id));
     });
 
-    //Error
-    socket.on(CHANNEL.error, function(msg) {
-        console.log(msg);
+    socket.on("disconnect", function() {
+       handleDisconnect(this);
     });
 }
 
@@ -68,7 +66,10 @@ function handle(socket) {
  * @param socket
  */
 function handleDisconnect(socket) {
-
+    if(GAME.players.get(socket.id)) {
+        console.log(GAME.players.get(socket.id).name + " is dropped.");
+    }
+    console.log("Socket " + socket.id + " disconnected");
 }
 
 module.exports.handle = handle;

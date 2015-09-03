@@ -63,3 +63,15 @@ I didn't do a lot of work on the project today. I have an idea for how I'm going
 will be inside the CHANNEL.MINIGAME channel, and I'll pass along a simple object that has the values of 'game' and 'event'. That way I can store events
 only inside of the relevant controllers. I'm currently having an issue where my client isn't able to receive messages from the server in the minigame channel,
 but I'm just going to have to deal with that tomorrow.
+
+##Thursday, 3rd of September
+
+I figured out the problem I was having last night. Turns out Gulp wasn't running and I kept testing an old build. Wonderful.
+I got the message to send but now I am having problems with my child process. It seems like the process terminates itself immediately
+instead of staying open. This is fairly depressing and I'm going to try and see if I can use a socket.io namespace to save myself some
+trouble. Child processes are cool but there is no reason I should force them into my project, especially if namespacing works just as
+well with less trouble.
+
+So, as a lesson to myself (again) in not overcomplicating things, I've worked out how to send a socket packet to a minigame correctly
+without using namespacing or child processes. I think I get excited about new or interesting technologies and then try to incorporate
+them into my project. Now I can work on actually making a real minigame.

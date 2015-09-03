@@ -48,6 +48,9 @@ app.factory('socket', function($rootScope) {
                     }
                 });
             });
+        },
+        changeNamespace: function(namespace) {
+            socket = io(namespace);
         }
     };
 });
@@ -61,6 +64,9 @@ app.factory('properties', function() {
         },
         set: function(key, value) {
             props[key] = value;
+        },
+        remove: function(key) {
+            delete props[key];
         }
     }
 });
