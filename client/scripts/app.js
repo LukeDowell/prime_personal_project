@@ -69,9 +69,7 @@ app.factory('properties', function() {
  * A container for all of our socket requests, just to keep them organized
  */
 var CHANNEL = {
-    MINIGAME: {
-        BUTTONPUSH: "button push"
-    },
+    MINIGAME: "minigame",
     createRoom: "create room",
     joinRequest: "join request",
     playerJoined: "player joined",

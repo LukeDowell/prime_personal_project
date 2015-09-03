@@ -56,3 +56,10 @@ While I've been working on implementing my test minigame, I've been thinking abo
 matter right now though because I've hit a bit of a roadblock. How do I alert all of the players joining a specific minigame that they
 are now a part of that game? Additionally, I'm beginning to wonder what happens when multiple instances of the same game run. I suspect
 that ChildProcesses won't play very nice with that scenario.
+
+##Wednesday, 2nd of September
+
+I didn't do a lot of work on the project today. I have an idea for how I'm going to handle specific minigame messages, though. Any minigame messages
+will be inside the CHANNEL.MINIGAME channel, and I'll pass along a simple object that has the values of 'game' and 'event'. That way I can store events
+only inside of the relevant controllers. I'm currently having an issue where my client isn't able to receive messages from the server in the minigame channel,
+but I'm just going to have to deal with that tomorrow.
