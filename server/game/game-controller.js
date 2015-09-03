@@ -9,7 +9,7 @@ var ChildProcess = require('child_process');
 var ButtonPushGame = require('./minigames/button-push');
 
 //Game namespace
-var GAME = {
+var game = {
 
     //Whether or not the game has started
     isRunning: false,
@@ -34,10 +34,10 @@ var GAME = {
      *      True if game started, false otherwise
      */
     startGame: function(socketid) {
-        if (!GAME.isRunning && socketid === GAME.adminConnection) {
+        if (!game.isRunning && socketid === game.adminConnection) {
             console.log("Starting game...");
-            GAME.isRunning = true;
-            GAME.runTestGame();
+            game.isRunning = true;
+            game.runTestGame();
             return true;
         }
         return false;
@@ -54,21 +54,21 @@ var GAME = {
      */
     handleNewPlayer: function(name, socket) {
         var player = null;
-        if(GAME.players.get(socket.id) === undefined && !GAME.isRunning) {
+        if(game.players.get(socket.id) === undefined && !game.isRunning) {
 
             player = new Player(name, socket.id);
-            GAME.players.set(socket.id, player);
+            game.players.set(socket.id, player);
 
-            if(GAME.team.blue.length > GAME.team.red.length) {
+            if(game.team.blue.length > game.team.red.length) {
                 player.team = "red";
-            } else if (GAME.team.red.length > GAME.team.blue.length) {
+            } else if (game.team.red.length > game.team.blue.length) {
                 player.team = "blue";
             } else if (Math.random() > 0.5) {
                 player.team = "red";
             } else {
                 player.team = "blue";
             }
-            GAME.team[player.team].push(player);
+            game.team[player.team].push(player);
             console.log("Added new player: " + player.name + " to team: " + player.team);
         }
         return player;
@@ -80,19 +80,19 @@ var GAME = {
     runTestGame: function() {
 
         var allPlayers = [];
-        for(var player of GAME.players.values()) {
+        for(var player of game.players.values()) {
             allPlayers.push(player);
         }
         var buttonPushGame = new ButtonPushGame(io, allPlayers);
         var gameInstance = new GameInstance(buttonPushGame, allPlayers);
-        POOL.activeGames.push(gameInstance);
+        pool.activeGames.push(gameInstance);
     }
 };
 
 /**
  * Minigame pool functionality
  */
-var POOL = {
+var pool = {
 
     //An array of GameInstances
     activeGames: [],
@@ -103,9 +103,9 @@ var POOL = {
      * @returns {*}
      */
     getInstanceForSocket: function(socketid) {
-        for(var i = 0, length = POOL.activeGames.length; i < length; i++) {
-            if(POOL.activeGames[i].containsSocket(socketid)) {
-                return POOL.activeGames[i];
+        for(var i = 0, length = pool.activeGames.length; i < length; i++) {
+            if(pool.activeGames[i].containsSocket(socketid)) {
+                return pool.activeGames[i];
             }
         }
         return null;
@@ -159,5 +159,5 @@ function Player(name, socketid) {
     this.team = null;
 }
 
-module.exports = GAME;
-module.exports.POOL = POOL;
+module.exports.game = game;
+module.exports.pool = pool;

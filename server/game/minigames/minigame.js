@@ -2,6 +2,8 @@
  * Created by lukedowell on 8/31/15.
  */
 
+var adminConnection = require('../game-controller').adminConnection;
+
 //A list of all the games we have with IDs
 var GAMES = {
     BUTTON_PUSH: "buttonpush",
@@ -11,6 +13,8 @@ var GAMES = {
 
 /**
  * Minigame superclass
+ * @param io
+ *
  * @param minplayers
  *      The minimum amount of players
  * @param maxplayers
@@ -25,11 +29,23 @@ function Game(io, minplayers, maxplayers, participants) {
     this.maxplayers = maxplayers;
     this.participants = participants;
 }
-Game.prototype.sendJoinRequest = function() {
+Game.prototype.sendJoinRequest = function(game) {
     var length = this.participants.length;
     for(var i = 0; i < length; i++) {
-        this.io.to(this.participants[i].socketid).emit("minigame", GAMES.BUTTON_PUSH);
+        this.io.to(this.participants[i].socketid).emit("minigame", game);
     }
+};
+Game.prototype.getPlayerBySocket = function(socketid) {
+    var length = this.participants.length;
+    for(var i = 0; i < length; i++) {
+        if(this.participants[i].socketid === socketid) {
+            return this.participants[i];
+        }
+    }
+    return null;
+};
+Game.prototype.sendToAdmin = function(msg, callback) {
+  this.io.sockets.connected[adminConnection].emit("event", msg, callback);
 };
 module.exports.Game = Game;
 module.exports.GAMES = GAMES;

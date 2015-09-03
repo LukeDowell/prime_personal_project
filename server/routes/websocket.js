@@ -3,7 +3,7 @@
  */
 
 var io = require('../app').io;
-var GAME = require('../game/game-controller');
+var controller = require('../game/game-controller');
 
 /**
  * A container for all of our socket requests, just to keep them organized
@@ -25,7 +25,7 @@ var CHANNEL = {
 function handle(socket) {
 
     socket.on(CHANNEL.MINIGAME, function(msg, callback) {
-        var instance = GAME.POOL.getInstanceForSocket(this.id);
+        var instance = controller.pool.getInstanceForSocket(this.id);
         if(instance) {
             instance.minigame.handleSocket(this, msg, callback);
         }
@@ -33,17 +33,17 @@ function handle(socket) {
 
     //Player join request
     socket.on(CHANNEL.joinRequest, function(msg, callback) {
-        var newPlayer = GAME.handleNewPlayer(msg, this);
+        var newPlayer = controller.game.handleNewPlayer(msg, this);
         if(newPlayer) {
-            io.to(GAME.adminConnection).emit(CHANNEL.event, "Player joined: " + socket.id);
+            io.to(controller.game.adminConnection).emit(CHANNEL.event, "Player joined: " + socket.id);
         }
         callback(newPlayer);
     });
 
     //Receive application to be admin
     socket.on(CHANNEL.createRoom, function(msg, callback) {
-        if(GAME.adminConnection === undefined || GAME.adminConnection == this.id) {
-            GAME.adminConnection = this.id;
+        if(controller.game.adminConnection === undefined || controller.game.adminConnection == this.id) {
+            controller.game.adminConnection = this.id;
             callback(true);
         } else {
             callback(false);
@@ -53,7 +53,7 @@ function handle(socket) {
 
     //Request to start the game
     socket.on(CHANNEL.startGameRequest, function(msg, callback) {
-        callback(GAME.startGame(this.id));
+        callback(controller.game.startGame(this.id));
     });
 
     socket.on("disconnect", function() {
@@ -66,8 +66,8 @@ function handle(socket) {
  * @param socket
  */
 function handleDisconnect(socket) {
-    if(GAME.players.get(socket.id)) {
-        console.log(GAME.players.get(socket.id).name + " is dropped.");
+    if(controller.game.players.get(socket.id)) {
+        console.log(controller.game.players.get(socket.id).name + " is dropped.");
     }
     console.log("Socket " + socket.id + " disconnected");
 }

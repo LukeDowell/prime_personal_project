@@ -13,14 +13,26 @@ var EVENT = {
 
 function ButtonPushMinigame(io, participants) {
     Mini.Game.call(this, io, MIN_PLAYERS, MAX_PLAYERS, participants);
-    this.sendJoinRequest();
+    this.sendJoinRequest(Mini.GAMES.BUTTON_PUSH);
+
+    this.redPoints = 0;
+    this.bluePoints = 0;
+    setTimeout(function() {
+        //Game is over
+        this.sendToAdmin("ButtonPush over! Red team: " + this.redPoints + " -- Blue team: " + this.bluePoints);
+    }, (1000 * 10));
 }
 ButtonPushMinigame.prototype = Object.create(Mini.Game.prototype);
 ButtonPushMinigame.prototype.handleSocket = function(socket, msg, callback) {
     if(msg.event) {
         switch(msg.event) {
             case EVENT.click:
-                console.log("Receiving " + msg.data + " clicks from: " + socket.id);
+                var team = this.getPlayerBySocket(socket.id).team;
+                if(team === "red") {
+                    this.redPoints += parseInt(msg.data);
+                } else {
+                    this.bluePoints += parseInt(msg.data);
+                }
                 break;
             default:
                 console.log("Unhandled event: " + msg.event);
