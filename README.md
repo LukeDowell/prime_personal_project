@@ -75,3 +75,4 @@ well with less trouble.
 So, as a lesson to myself (again) in not overcomplicating things, I've worked out how to send a socket packet to a minigame correctly
 without using namespacing or child processes. I think I get excited about new or interesting technologies and then try to incorporate
 them into my project. Now I can work on actually making a real minigame.
+

@@ -83,7 +83,7 @@ var game = {
         for(var player of game.players.values()) {
             allPlayers.push(player);
         }
-        var buttonPushGame = new ButtonPushGame(io, allPlayers);
+        var buttonPushGame = new ButtonPushGame(io, game.adminConnection, allPlayers);
         var gameInstance = new GameInstance(buttonPushGame, allPlayers);
         pool.activeGames.push(gameInstance);
     }

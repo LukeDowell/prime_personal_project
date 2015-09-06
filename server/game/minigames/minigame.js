@@ -2,7 +2,6 @@
  * Created by lukedowell on 8/31/15.
  */
 
-var adminConnection = require('../game-controller').adminConnection;
 
 //A list of all the games we have with IDs
 var GAMES = {
@@ -23,8 +22,9 @@ var GAMES = {
  *      The player objects htat are participating in the minigame
  * @constructor
  */
-function Game(io, minplayers, maxplayers, participants) {
+function Game(io, adminSocketId, minplayers, maxplayers, participants) {
     this.io = io;
+    this.adminSocketId = adminSocketId;
     this.minplayers = minplayers;
     this.maxplayers = maxplayers;
     this.participants = participants;
@@ -45,7 +45,7 @@ Game.prototype.getPlayerBySocket = function(socketid) {
     return null;
 };
 Game.prototype.sendToAdmin = function(msg, callback) {
-  this.io.sockets.connected[adminConnection].emit("event", msg, callback);
+  this.io.sockets.connected[this.adminSocketId].emit("event", msg, callback);
 };
 module.exports.Game = Game;
 module.exports.GAMES = GAMES;

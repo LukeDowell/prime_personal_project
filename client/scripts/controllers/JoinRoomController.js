@@ -17,7 +17,7 @@ app.controller("JoinRoomController", ['$scope', '$window', '$mdDialog', 'socket'
         } else {
             socket.emit(CHANNEL.joinRequest, name, function(response) {
                 if(response != null) {
-                    properties.set('name', name);
+                    properties.set('name', response.name);
                     properties.set('team', response.team);
                     $window.location.href = "#waiting";
                 } else {

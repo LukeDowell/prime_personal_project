@@ -7,6 +7,9 @@ var app = require('express')();
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
+//Pull in environment variables
+var env = require('node-env-file')(__dirname + "/config.env");
+
 //Export all of our useful modules
 //There has to be a better way to export these correctly
 module.exports.io = io;

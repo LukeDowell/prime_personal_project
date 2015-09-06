@@ -11,16 +11,16 @@ var EVENT = {
     click: "click"
 };
 
-function ButtonPushMinigame(io, participants) {
-    Mini.Game.call(this, io, MIN_PLAYERS, MAX_PLAYERS, participants);
+function ButtonPushMinigame(io, adminConnection, participants) {
+    Mini.Game.call(this, io, adminConnection, MIN_PLAYERS, MAX_PLAYERS, participants);
     this.sendJoinRequest(Mini.GAMES.BUTTON_PUSH);
 
     this.redPoints = 0;
     this.bluePoints = 0;
-    setTimeout(function() {
+    setTimeout(function(game) {
         //Game is over
-        this.sendToAdmin("ButtonPush over! Red team: " + this.redPoints + " -- Blue team: " + this.bluePoints);
-    }, (1000 * 10));
+        game.sendToAdmin("ButtonPush over! Red team: " + game.redPoints + " -- Blue team: " + game.bluePoints);
+    }, (1000 * 10), this);
 }
 ButtonPushMinigame.prototype = Object.create(Mini.Game.prototype);
 ButtonPushMinigame.prototype.handleSocket = function(socket, msg, callback) {
