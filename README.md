@@ -76,3 +76,13 @@ So, as a lesson to myself (again) in not overcomplicating things, I've worked ou
 without using namespacing or child processes. I think I get excited about new or interesting technologies and then try to incorporate
 them into my project. Now I can work on actually making a real minigame.
 
+##Friday, 4th of September
+
+Today was all about fleshing out the minigame skeleton. The test minigame I've been using has been aptly named "ButtonPush." It involves
+pushing a button more times than the other team pushes a button. I ran into a scope issue today. How do I send event messages from the minigame
+controller to the admin client? It bugged me for a while, I tried requiring the admin connection from the main game controller among some other
+things. I then realized that I could just pass in the admin ID to every minigame as I create them. That didn't seem like the most
+elegant solution to me but I couldn't come up with a good reason not to do it. I tried it out and it worked! Now my minigames can talk
+to all their clients and the admin. This weekend I'm going to begin work on an actual minigame although I'm anticipating I probably won't
+have one fully finished by Tuesday.
+
