@@ -32,7 +32,7 @@ function Game(io, adminSocketId, minplayers, maxplayers, participants) {
 Game.prototype.sendJoinRequest = function(game) {
     var length = this.participants.length;
     for(var i = 0; i < length; i++) {
-        this.io.to(this.participants[i].socketid).emit("minigame", game);
+        this.io.to(this.participants[i].socketid).emit(global.CHANNEL.MINIGAME, game);
     }
 };
 Game.prototype.getPlayerBySocket = function(socketid) {
@@ -44,8 +44,14 @@ Game.prototype.getPlayerBySocket = function(socketid) {
     }
     return null;
 };
-Game.prototype.sendToAdmin = function(msg, callback) {
-  this.io.sockets.connected[this.adminSocketId].emit("event", msg, callback);
+Game.prototype.sendToAdmin = function(path, msg, callback) {
+  this.io.sockets.connected[this.adminSocketId].emit(path, msg, callback);
+};
+Game.prototype.broadcast = function(path, msg) {
+    var length = this.participants.length;
+    for(var i = 0; i < length; i++) {
+        this.io.to(this.participants[i].socketid).emit(path, msg);
+    }
 };
 module.exports.Game = Game;
 module.exports.GAMES = GAMES;

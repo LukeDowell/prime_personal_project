@@ -76,6 +76,7 @@ app.factory('properties', function() {
  */
 var CHANNEL = {
     MINIGAME: "minigame",
+    finished: "finished",
     createRoom: "create room",
     joinRequest: "join request",
     playerJoined: "player joined",

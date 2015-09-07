@@ -80,6 +80,8 @@ var game = {
     runTestGame: function() {
 
         var allPlayers = [];
+
+        //Needs EMCAscript 6 compiler
         for(var player of game.players.values()) {
             allPlayers.push(player);
         }

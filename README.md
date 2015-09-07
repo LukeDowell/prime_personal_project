@@ -86,3 +86,19 @@ elegant solution to me but I couldn't come up with a good reason not to do it. I
 to all their clients and the admin. This weekend I'm going to begin work on an actual minigame although I'm anticipating I probably won't
 have one fully finished by Tuesday.
 
+##Monday, 7th of September
+
+I mentioned on Friday that I was going to try and complete an actual minigame this weekend, however I looked at my code
+and saw that I was probably getting a little ahead of myself. The test minigame isn't entirely finished yet, so that comes first.
+That means a player has to join the game, play, score points and be sent back to the waiting screen. The points should be
+accurately scored and displayed on the admin's control panel. If I can finish that, I'll do a tiny bit of styling since
+I present tomorrow. Even though the 2+ weeks is up I think it would be a good exercise for me to continue working on
+this game, at least until I've brought it up to my original vision.
+
+A problem just occured to me. How will I effectively aggregate all of the points across the (in theory) multiple minigames
+and present them to the admin? I'm gonna let that stew in the back of my mind while I finish the test minigame.
+
+Also I'm sick of not having my CHANNEL object available everywhere. It is sloppy and inconsistent to just it some places
+and not others. I'm going to figure out how to correctly place a global javascript object in node. I'm thinking I could use
+the actual global object but that feels dirty.
+

@@ -8,15 +8,7 @@ var controller = require('../game/game-controller');
 /**
  * A container for all of our socket requests, just to keep them organized
  */
-var CHANNEL = {
-    MINIGAME: "minigame",
-    createRoom: "create room",
-    joinRequest: "join request",
-    playerJoined: "player joined",
-    startGameRequest: "start game",
-    event: "event",
-    error: "application error"
-};
+var CHANNEL = global.CHANNEL;
 
 /**
  * Separates out our networking stuff from our game logic
