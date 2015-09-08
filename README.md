@@ -102,3 +102,13 @@ Also I'm sick of not having my CHANNEL object available everywhere. It is sloppy
 and not others. I'm going to figure out how to correctly place a global javascript object in node. I'm thinking I could use
 the actual global object but that feels dirty.
 
+I accomplished almost everything I wanted to do today minus the styling. I realize that is a very important part of web applications,
+but I don't want to do it and no one is here to convince me otherwise.
+
+-----------
+
+This is my last commit before I present tomorrow. Overall I am glad I picked socket io as I got to learn a lot about how
+powerful a simple tool can be. Looking at my 'final' project now and comparing against what I imagined it would be is interesting.
+I breezed through things I anticipated would give me a lot of trouble, and got severely hung up on things I thought would be easy.
+I think I've solidified my opinion that I really enjoy working on the server side of the stack, so I will try and pursue that
+in the future. I'm looking forward to continually working on this project, although serious work probably won't resume for a while.
