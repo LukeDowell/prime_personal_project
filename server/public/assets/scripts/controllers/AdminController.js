@@ -2,8 +2,16 @@
  * Created by lukedowell on 8/27/15.
  */
 app.controller("AdminController", function($scope, socket) {
-    $scope.blueProgress = 33;
-    $scope.redProgress = 66;
+
+    //The code below should really be server side, ideally the admin client would just get a percentage to display
+    //but whatever man this stuff is due tomorrow
+    var target_score = 20;
+    var bluePoints = 0;
+    var redPoints = 0;
+
+    $scope.blueProgress = 0;
+    $scope.redProgress = 0;
+
     $scope.events = [];
 
     $scope.startGame = function() {
@@ -32,5 +40,14 @@ app.controller("AdminController", function($scope, socket) {
     //We receive a new event
     socket.on(CHANNEL.event, function(msg) {
         $scope.events.push(msg);
+    });
+
+    //we receive the scores for our only minigame
+    socket.on(CHANNEL.MINIGAME, function(msg) {
+        bluePoints += parseInt(msg.blue);
+        redPoints += parseInt(msg.red);
+
+        $scope.blueProgress = Math.round((bluePoints / target_score) * 100);
+        $scope.redProgress = Math.round((redPoints / target_score) * 100);
     });
 });

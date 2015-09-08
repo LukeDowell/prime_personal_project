@@ -11,8 +11,8 @@ var ButtonPushGame = require('./minigames/button-push');
 //Game namespace
 var game = {
 
-    //Whether or not the game has started
-    isRunning: false,
+    //Whether or not this has been initialized yet
+    isInit: false,
 
     //The admin socket connection
     adminConnection: undefined,
@@ -27,6 +27,16 @@ var game = {
     },
 
     /**
+     * Initializes the game. Really only starts garbage collection on the minigames
+     */
+    init: function() {
+        var gc = setInterval(function() {
+            pool.garbageCollect();
+        }, pool.COLLECTION_INTERVAL)
+        game.isInit = false;
+    },
+
+    /**
      * Handles a request to start the game
      * @param socketid
      *      The socket id making a request
@@ -34,9 +44,11 @@ var game = {
      *      True if game started, false otherwise
      */
     startGame: function(socketid) {
-        if (!game.isRunning && socketid === game.adminConnection) {
+        if (socketid === game.adminConnection) {
+            if(!game.isInit) {
+                game.init();
+            }
             console.log("Starting game...");
-            game.isRunning = true;
             game.runTestGame();
             return true;
         }
@@ -83,7 +95,10 @@ var game = {
 
         //Needs EMCAscript 6 compiler
         for(var player of game.players.values()) {
-            allPlayers.push(player);
+            if(!player.isCheckedOut) {
+                allPlayers.push(player);
+                player.isCheckedOut = true;
+            }
         }
         var buttonPushGame = new ButtonPushGame(io, game.adminConnection, allPlayers);
         var gameInstance = new GameInstance(buttonPushGame, allPlayers);
@@ -95,6 +110,9 @@ var game = {
  * Minigame pool functionality
  */
 var pool = {
+
+    //How often we want the pool to check for dead minigames in milliseconds
+    COLLECTION_INTERVAL: 2000,
 
     //An array of GameInstances
     activeGames: [],
@@ -111,6 +129,22 @@ var pool = {
             }
         }
         return null;
+    },
+
+    garbageCollect: function() {
+        if(pool.activeGames.length > 0) {
+            var length = pool.activeGames.length;
+            for(var i = 0; i < length; i++) {
+                if(!pool.activeGames[i].minigame.isRunning) {
+                    //Collect dat ish
+                    console.log("Clearing minigame: " + i);
+                    //Check players back in
+                    pool.activeGames[i].uncheckPlayers();
+                    //Remove game
+                    pool.activeGames.splice(i, 1);
+                }
+            }
+        }
     }
 };
 
@@ -139,6 +173,15 @@ function GameInstance(minigame, players) {
         }
         return false;
     }
+
+    this.uncheckPlayers = function() {
+        var length = this.players.length;
+        for(var i = 0; i < length; i++) {
+            var pid = this.players[i].socketid;
+            game.players.get(pid).isCheckedOut = false;
+            console.log("Player: " + pid + " unchecked!");
+        }
+    }
 }
 
 /**
@@ -159,6 +202,9 @@ function Player(name, socketid) {
 
     //This player's team
     this.team = null;
+
+    //Whether or not this player is checked out by a minigame
+    this.isCheckedOut = false;
 }
 
 module.exports.game = game;

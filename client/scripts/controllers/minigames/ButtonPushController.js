@@ -24,12 +24,10 @@ app.controller('ButtonPushController', function($scope, $interval, $window,  soc
     }, 2000);
 
     socket.on(CHANNEL.finished, function(msg) {
-        console.log("Finished Reached");
         if(task) {
             $interval.cancel(task);
             console.log("Killed interval task");
         }
-        console.log("ButtonPushed finished");
         var endText = "";
         if(msg.toLowerCase() == properties.get("team")) {
             //we won!
@@ -38,10 +36,10 @@ app.controller('ButtonPushController', function($scope, $interval, $window,  soc
                 properties.get("team") + " prevails! A new mission will be coming shortly.";
         } else {
             //they won!
-            //Too harsh probably
-            endText = "You have failed your country and your fellow team mates. Await further orders, and do try harder this time.";
+            endText = "The enemy is victorious! We must do better...await further orders.";
         }
         properties.set("waitingtext", endText);
+        console.log("ButtonPushed finished");
         $window.location.href = "#waiting";
     });
 

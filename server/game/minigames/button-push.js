@@ -7,7 +7,7 @@ var MIN_PLAYERS = 1;
 var MAX_PLAYERS = 5;
 
 //How long the game should run in milliseconds
-var GAME_TIME = 1000 * 1;
+var GAME_TIME = 1000 * 15;
 
 //Events that pertain to this minigame
 var EVENT = {
@@ -23,6 +23,7 @@ function ButtonPushMinigame(io, adminConnection, participants) {
     setTimeout(function(game) {
         //Game is over
         game.sendToAdmin(global.CHANNEL.event, "ButtonPush over! Red team: " + game.redPoints + " -- Blue team: " + game.bluePoints);
+        game.sendToAdmin(global.CHANNEL.MINIGAME, {blue: game.bluePoints, red: game.redPoints});
         var winningTeam = "";
         if(game.bluePoints > game.redPoints) {
             winningTeam = "blue";
@@ -33,6 +34,7 @@ function ButtonPushMinigame(io, adminConnection, participants) {
             winningTeam = "nobody";
         }
         game.broadcast(global.CHANNEL.finished, winningTeam);
+        game.isRunning = false;
     }, (GAME_TIME), this);
 }
 ButtonPushMinigame.prototype = Object.create(Mini.Game.prototype);
